@@ -4,39 +4,6 @@
 
 #######################################################################
 #######################################################################
-### Model functions provided by assignment based upon caching the 
-### arithmetic mean of a vector
-
-makeVector <- function(x = numeric()) {
-        m <- NULL
-        set <- function(y) {
-                x <<- y
-                m <<- NULL
-        }
-        get <- function() x
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
-        list(set = set, get = get,
-             setmean = setmean,
-             getmean = getmean)
-}
-
-
-cachemean <- function(x, ...) {
-        m <- x$getmean()
-        if(!is.null(m)) {
-                message("getting cached data")
-                return(m)
-        }
-        data <- x$get()
-        m <- mean(data, ...)
-        x$setmean(m)
-        m
-}
-
-
-#######################################################################
-#######################################################################
 ## The "makeCacheMatrix" function calculates and returns the mathematical inverse of a matrix "x" using the "solve" function, and caches the result ("m").
 
 makeCacheMatrix <- function(x = matrix()) {
