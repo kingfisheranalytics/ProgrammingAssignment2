@@ -1,6 +1,42 @@
-## mathematical caching functions for Coursera John Hopkin's R Course, Week 3 Programming Assignment 2
-## Guy Hagen 5/19/2015
+#######################################################################
+#######################################################################
+## cacheMatrix.R // Guy Hagen 5/19/2015
 
+#######################################################################
+#######################################################################
+### Model functions provided by assignment based upon caching the 
+### arithmetic mean of a vector
+
+makeVector <- function(x = numeric()) {
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setmean <- function(mean) m <<- mean
+        getmean <- function() m
+        list(set = set, get = get,
+             setmean = setmean,
+             getmean = getmean)
+}
+
+
+cachemean <- function(x, ...) {
+        m <- x$getmean()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get()
+        m <- mean(data, ...)
+        x$setmean(m)
+        m
+}
+
+
+#######################################################################
+#######################################################################
 ## The "makeCacheMatrix" function calculates and returns the mathematical inverse of a matrix "x" using the "solve" function, and caches the result ("m").
 
 makeCacheMatrix <- function(x = matrix()) {
@@ -16,6 +52,7 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
+#######################################################################
 ## This function uses makeCacheMatrix to initialize and cache an inversion of a provided matrix ("x").
 
 cacheSolve <- function(x, ...) {
@@ -31,3 +68,22 @@ cacheSolve <- function(x, ...) {
         m
 }
 
+
+#######################################################################
+#######################################################################
+### TEST DATA
+###
+### Loading the above functions and testing with the following commands
+### (uncommented first) will produce the following correctly inverted
+### and cached matrix result:
+###
+###      [,1]   [,2]   [,3]  [,4]
+### [1,] -0.25 -0.125 -0.125 -1.50
+### [2,]  0.00  0.500 -0.500  4.00
+### [3,]  0.00  0.000  0.250  0.25
+### [4,]  0.00  0.000  0.000  1.00
+###
+#######################################################################
+## m1<- matrix(c(-4,0,0,0,-1,2,0,0,-4,4,4,0,-1,-9,-1,1), nrow=4, ncol=4)
+## m2<-makeCacheMatrix(m1)
+## cacheSolve(m2)
